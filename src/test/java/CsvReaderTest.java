@@ -8,7 +8,7 @@ public class CsvReaderTest {
 
     @Test
     public void testReadCsv() throws IOException {
-        final List<List<String>> csv = CsvReader.readCsv("src/test/resources/testData.csv");
+        final List<List<String>> csv = CsvReader.readCsv("src/test/resources/testData1Row.csv");
         assertEquals(1, csv.size());
         assertEquals(Arrays.asList("Alice", "25"), csv.get(0));
     }

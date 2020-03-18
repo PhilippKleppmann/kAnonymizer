@@ -1,5 +1,6 @@
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -23,6 +24,15 @@ public class kAnonymizerTest {
         final Multimap<List<String>, Integer> compactifiedFrequencyList = kAnonymizer.compactifyFrequencyList(givenFrequencyList);
 
         assertEquals(expectedFrequencyList, compactifiedFrequencyList);
+    }
+
+    @Test
+    public void testLoadData() throws IOException {
+        final KAnonymizer kAnonymizer = new KAnonymizer();
+
+        final Multimap<List<String>, Integer> frequencyList = kAnonymizer.loadData("src/test/resources/testData3Rows.csv");
+
+        System.out.println(frequencyList);
     }
 
 }
