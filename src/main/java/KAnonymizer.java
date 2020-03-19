@@ -14,7 +14,7 @@ public class KAnonymizer {
         final FrequencyList frequencyList = new FrequencyList();
 
         for (List<String> row : table) {
-            frequencyList.put(row, 1);
+            frequencyList.put(row);
         }
         return frequencyList;
     }
