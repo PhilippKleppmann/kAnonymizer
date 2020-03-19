@@ -1,38 +1,21 @@
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class kAnonymizerTest {
 
     @Test
-    public void testCompactifyFrequencyList() {
-        final KAnonymizer kAnonymizer = new KAnonymizer();
-
-        final HashMultimap<List<String>, Integer> givenFrequencyList = HashMultimap.create();
-        givenFrequencyList.put(Arrays.asList("a","b"), 2);
-        givenFrequencyList.put(Arrays.asList("a","b"), 3);
-        givenFrequencyList.put(Arrays.asList("a","c"), 1);
-
-        final HashMultimap<List<String>, Integer> expectedFrequencyList = HashMultimap.create();
-        expectedFrequencyList.put(Arrays.asList("a","b"), 5);
-        expectedFrequencyList.put(Arrays.asList("a","c"), 1);
-
-        final Multimap<List<String>, Integer> compactifiedFrequencyList = kAnonymizer.compactifyFrequencyList(givenFrequencyList);
-
-        assertEquals(expectedFrequencyList, compactifiedFrequencyList);
-    }
-
-    @Test
     public void testLoadData() throws IOException {
         final KAnonymizer kAnonymizer = new KAnonymizer();
 
-        final Multimap<List<String>, Integer> frequencyList = kAnonymizer.loadData("src/test/resources/testData3Rows.csv");
+        final FrequencyList frequencyList = kAnonymizer.loadData("src/test/resources/testData3Rows.csv");
 
-        System.out.println(frequencyList);
+        final FrequencyList expectedFrequencyList = new FrequencyList();
+        expectedFrequencyList.put(Arrays.asList("Bob", "20"), 2);
+        expectedFrequencyList.put(Arrays.asList("Alice", "25"), 1);
+
+        assertEquals(expectedFrequencyList, frequencyList);
     }
 
 }
