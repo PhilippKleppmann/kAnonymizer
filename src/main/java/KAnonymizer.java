@@ -11,7 +11,8 @@ public class KAnonymizer {
     @VisibleForTesting
     FrequencyList loadData(String filename) throws IOException {
         final List<List<String>> table = CsvReader.readCsv(filename);
-        final FrequencyList frequencyList = new FrequencyList();
+
+        final FrequencyList frequencyList = new FrequencyList(table.get(0).size());
 
         for (List<String> row : table) {
             frequencyList.put(row);

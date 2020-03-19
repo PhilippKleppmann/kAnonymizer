@@ -1,7 +1,10 @@
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Sets;
 import java.util.List;
+import java.util.Set;
 
 public class FrequencyList {
 
@@ -14,9 +17,37 @@ public class FrequencyList {
 
     @VisibleForTesting
     Multiset<List<String>> data = HashMultiset.create();
+    private       List<Set<String>> distinctValuesPerColumn = Lists.newArrayList();
+    private final int               numberOfColumns;
 
-    public void put(List<String> equivalenceClass) {
-        data.add(equivalenceClass);
+    public FrequencyList(int numberOfColumns) {
+        this.numberOfColumns = numberOfColumns;
+        for (int i = 0; i < numberOfColumns; ++i) {
+            distinctValuesPerColumn.add(Sets.newHashSet());
+        }
+    }
+
+    public void put(List<String> row) {
+        data.add(row);
+
+        for (int i = 0; i < numberOfColumns; ++i) {
+            final Set<String> distinctValues = distinctValuesPerColumn.get(i);
+            distinctValues.add(row.get(i));
+            distinctValuesPerColumn.set(i, distinctValues);
+        }
+    }
+
+    //generalize the column that has most distinct values
+    public int findColumnToGeneralize() {
+        int maxDistinctColumnValues = 0;
+        int columnToGeneralize = 0;
+        for (int i = 0; i < distinctValuesPerColumn.size(); ++i) {
+            if (distinctValuesPerColumn.get(i).size() > maxDistinctColumnValues) {
+                maxDistinctColumnValues = distinctValuesPerColumn.get(i).size();
+                columnToGeneralize = i;
+            }
+        }
+        return columnToGeneralize;
     }
 
     @Override
