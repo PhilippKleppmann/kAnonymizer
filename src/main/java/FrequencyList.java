@@ -3,17 +3,12 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 public class FrequencyList {
-
-    //generalization step:
-    //* generate empty FrequencyList
-    //* iterate over existing FrequencyList
-    //  * generalize field if necessary
-    //  * 'put' into new FrequencyList
-    //The result will be a fresh generalized FrequencyList
 
     @VisibleForTesting
     Multiset<List<String>> data = HashMultiset.create();
@@ -48,6 +43,19 @@ public class FrequencyList {
             }
         }
         return columnToGeneralize;
+    }
+
+    public FrequencyList generalize(int columnToGeneralize, Hierarchy hierarchy) {
+        FrequencyList result = new FrequencyList(numberOfColumns);
+
+        for (List<String> row : data) {
+            final String generalizedValue = hierarchy.generalize(row.get(columnToGeneralize));
+            final List<String> generalizedRow = new ArrayList<>(row);
+            generalizedRow.set(columnToGeneralize, generalizedValue);
+            result.put(generalizedRow);
+        }
+
+        return result;
     }
 
     @Override
