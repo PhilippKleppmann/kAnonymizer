@@ -1,6 +1,5 @@
 package anonymization;
 
-import anonymization.FrequencyList;
 import com.google.common.annotations.VisibleForTesting;
 import config.Hierarchy;
 import java.util.List;
@@ -18,7 +17,7 @@ public class DataflyAlgorithm {
 
         while (continueGeneralizing(frequencyList)) {
             final int columnToGeneralize = frequencyList.findColumnToGeneralize();
-            frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
+            frequencyList = frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
         }
 
         suppressSmallEquivalenceClasses(frequencyList);

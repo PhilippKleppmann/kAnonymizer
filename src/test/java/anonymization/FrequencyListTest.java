@@ -31,7 +31,7 @@ public class FrequencyListTest {
     public void testGeneralize() throws IOException {
         final Hierarchy nameHierarchy = new Hierarchy("src/test/resources/nameHierarchy.csv");
 
-        final FrequencyList frequencyList = new FrequencyList(2);
+        FrequencyList frequencyList = new FrequencyList(2);
         frequencyList.put(alice);
         frequencyList.put(bob21);
         frequencyList.put(bob22);
@@ -41,7 +41,7 @@ public class FrequencyListTest {
         expectedFrequencyList.put(Arrays.asList("B", "21"));
         expectedFrequencyList.put(Arrays.asList("B", "22"));
 
-        frequencyList.generalize(0, nameHierarchy);
+        frequencyList = frequencyList.generalize(0, nameHierarchy);
 
         assertEquals(expectedFrequencyList, frequencyList);
     }

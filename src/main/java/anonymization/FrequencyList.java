@@ -5,14 +5,15 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 import config.Hierarchy;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class FrequencyList {
 
-    private Multiset<List<String>> data = HashMultiset.create();
-    private final List<Set<String>> distinctValuesPerColumn = Lists.newArrayList();
-    private final int               numberOfColumns;
+    private       Multiset<List<String>> data                    = HashMultiset.create();
+    private final List<Set<String>>      distinctValuesPerColumn = Lists.newArrayList();
+    private final int                    numberOfColumns;
 
     public FrequencyList(int numberOfColumns) {
         this.numberOfColumns = numberOfColumns;
@@ -48,14 +49,16 @@ public class FrequencyList {
         return columnToGeneralize;
     }
 
-    public void generalize(int columnToGeneralize, Hierarchy hierarchy) {
-        distinctValuesPerColumn.set(columnToGeneralize, Sets.newHashSet());
+    public FrequencyList generalize(int columnToGeneralize, Hierarchy hierarchy) {
+        FrequencyList result = new FrequencyList(numberOfColumns);
 
         for (List<String> row : data) {
             final String generalizedValue = hierarchy.generalize(row.get(columnToGeneralize));
-            row.set(columnToGeneralize, generalizedValue);
-            distinctValuesPerColumn.get(columnToGeneralize).add(generalizedValue);
+            final List<String> generalizedRow = new ArrayList<>(row);
+            generalizedRow.set(columnToGeneralize, generalizedValue);
+            result.put(generalizedRow);
         }
+        return result;
     }
 
     public void suppressEquivalenceClass(List<String> equivalenceClass) {

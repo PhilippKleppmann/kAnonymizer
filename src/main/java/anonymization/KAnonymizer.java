@@ -20,7 +20,7 @@ public class KAnonymizer {
 
     public void kAnonymize(String dataFileName, int k) throws IOException {
         FrequencyList frequencyList = loadData(dataFileName);
-        new DataflyAlgorithm(k, hierarchies).kAnonymize(frequencyList);
+        frequencyList = new DataflyAlgorithm(k, hierarchies).kAnonymize(frequencyList);
         writeData(frequencyList, dataFileName);
     }
 
