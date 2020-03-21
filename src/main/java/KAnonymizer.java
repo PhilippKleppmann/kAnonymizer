@@ -16,6 +16,11 @@ public class KAnonymizer {
 
     public void anonymize(String filename) throws IOException {
         FrequencyList frequencyList = loadData(filename);
+        int columnToGeneralize = frequencyList.findColumnToGeneralize();
+        frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
+        columnToGeneralize = frequencyList.findColumnToGeneralize();
+        frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
+        System.out.println("hello world");
     }
 
     @VisibleForTesting
