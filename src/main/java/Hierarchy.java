@@ -8,7 +8,7 @@ public class Hierarchy {
     private final int columns;
 
     public Hierarchy(String hierarchyConfigPath) throws IOException {
-        config = CsvReader.readCsv(hierarchyConfigPath);
+        config = CsvHandler.readCsv(hierarchyConfigPath);
         rows = config.size();
         columns = config.get(0).size();
     }
