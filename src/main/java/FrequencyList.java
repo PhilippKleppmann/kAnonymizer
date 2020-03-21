@@ -10,7 +10,7 @@ public class FrequencyList {
 
     @VisibleForTesting
     Multiset<List<String>> data = HashMultiset.create();
-    private       List<Set<String>> distinctValuesPerColumn = Lists.newArrayList();
+    private final List<Set<String>> distinctValuesPerColumn = Lists.newArrayList();
     private final int               numberOfColumns;
 
     public FrequencyList(int numberOfColumns) {
@@ -44,8 +44,12 @@ public class FrequencyList {
     }
 
     public void generalize(int columnToGeneralize, Hierarchy hierarchy) {
+        distinctValuesPerColumn.set(columnToGeneralize, Sets.newHashSet());
+
         for (List<String> row : data) {
-            row.set(columnToGeneralize, hierarchy.generalize(row.get(columnToGeneralize)));
+            final String generalizedValue = hierarchy.generalize(row.get(columnToGeneralize));
+            row.set(columnToGeneralize, generalizedValue);
+            distinctValuesPerColumn.get(columnToGeneralize).add(generalizedValue);
         }
     }
 
