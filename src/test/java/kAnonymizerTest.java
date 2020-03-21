@@ -11,9 +11,9 @@ public class kAnonymizerTest {
 
         final FrequencyList frequencyList = kAnonymizer.loadData("src/test/resources/testData3Rows.csv");
 
-        assertEquals(3, frequencyList.data.size());
-        assertEquals(2, frequencyList.data.count(Arrays.asList("Bob", "20")));
-        assertEquals(1, frequencyList.data.count(Arrays.asList("Alice", "25")));
+        assertEquals(3, frequencyList.getData().size());
+        assertEquals(2, frequencyList.getData().count(Arrays.asList("Bob", "20")));
+        assertEquals(1, frequencyList.getData().count(Arrays.asList("Alice", "25")));
     }
 
 }

@@ -3,13 +3,13 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class FrequencyList {
 
-    @VisibleForTesting
-    Multiset<List<String>> data = HashMultiset.create();
+    private Multiset<List<String>> data = HashMultiset.create();
     private final List<Set<String>> distinctValuesPerColumn = Lists.newArrayList();
     private final int               numberOfColumns;
 
