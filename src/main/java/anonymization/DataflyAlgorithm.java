@@ -20,7 +20,7 @@ public class DataflyAlgorithm {
             frequencyList = frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
         }
 
-        suppressSmallEquivalenceClasses(frequencyList);
+        frequencyList = frequencyList.suppressSmallEquivalenceClasses(k);
 
         return frequencyList;
     }
@@ -34,12 +34,5 @@ public class DataflyAlgorithm {
                                                       .reduce(0, (countSum, count) -> countSum + count);
 
         return allSmallEquivalenceClasses > k;
-    }
-
-    @VisibleForTesting
-    void suppressSmallEquivalenceClasses(final FrequencyList frequencyList) {
-        frequencyList.getData().entrySet().stream()
-                     .filter(entry -> entry.getCount() < k)
-                     .forEach(entry -> frequencyList.suppressEquivalenceClass(entry.getElement()));
     }
 }

@@ -34,21 +34,4 @@ public class DataflyAlgorithmTest {
 
         assertFalse(algorithm.continueGeneralizing(frequencyList));
     }
-
-    @Test
-    public void testSuppressSmallEquivalenceClasses() {
-        final DataflyAlgorithm algorithm = new DataflyAlgorithm(2, null);
-        FrequencyList frequencyList = new FrequencyList(2);
-        frequencyList.put(alice);
-        frequencyList.put(bob);
-        frequencyList.put(bob);
-
-        FrequencyList expectedFrequencyList = new FrequencyList(2);
-        expectedFrequencyList.put(bob);
-        expectedFrequencyList.put(bob);
-
-        algorithm.suppressSmallEquivalenceClasses(frequencyList);
-
-        assertEquals(expectedFrequencyList, frequencyList);
-    }
 }

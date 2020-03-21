@@ -47,16 +47,17 @@ public class FrequencyListTest {
     }
 
     @Test
-    public void testSuppressEquivalenceClass() {
-        final FrequencyList frequencyList = new FrequencyList(2);
+    public void testSuppressSmallEquivalenceClasses() {
+        FrequencyList frequencyList = new FrequencyList(2);
         frequencyList.put(alice);
         frequencyList.put(bob21);
         frequencyList.put(bob21);
 
-        final FrequencyList expectedFrequencyList = new FrequencyList(2);
-        expectedFrequencyList.put(alice);
+        FrequencyList expectedFrequencyList = new FrequencyList(2);
+        expectedFrequencyList.put(bob21);
+        expectedFrequencyList.put(bob21);
 
-        frequencyList.suppressEquivalenceClass(bob21);
+        frequencyList = frequencyList.suppressSmallEquivalenceClasses(2);
 
         assertEquals(expectedFrequencyList, frequencyList);
     }
