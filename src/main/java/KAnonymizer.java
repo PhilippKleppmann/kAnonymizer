@@ -6,10 +6,12 @@ import java.util.List;
 
 public class KAnonymizer {
 
-    private final List<Hierarchy> hierarchies;
+    private final List<Hierarchy> hierarchies = new ArrayList<>();
 
     public KAnonymizer(String... hierarchyFileNames) throws IOException {
-        hierarchies = loadHierarchies(hierarchyFileNames);
+        for (String fileName : hierarchyFileNames) {
+            hierarchies.add(new Hierarchy(fileName));
+        }
     }
 
     public void anonymize(String filename) throws IOException {
@@ -26,15 +28,5 @@ public class KAnonymizer {
             frequencyList.put(row);
         }
         return frequencyList;
-    }
-
-    List<Hierarchy> loadHierarchies(String... fileNames) throws IOException {
-        final List<Hierarchy> hierarchies = Arrays.asList();
-
-        for (String fileName : fileNames) {
-            hierarchies.add(new Hierarchy(fileName));
-        }
-
-        return hierarchies;
     }
 }
