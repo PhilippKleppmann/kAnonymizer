@@ -32,8 +32,8 @@ public class FrequencyListTest {
         expectedFrequencyList.put(Arrays.asList("B", "21"));
         expectedFrequencyList.put(Arrays.asList("B", "22"));
 
-        final FrequencyList generalizedFrequencyList = frequencyList.generalize(0, nameHierarchy);
+        frequencyList.generalize(0, nameHierarchy);
 
-        assertEquals(expectedFrequencyList, generalizedFrequencyList);
+        assertEquals(expectedFrequencyList, frequencyList);
     }
 }

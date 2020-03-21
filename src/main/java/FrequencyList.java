@@ -45,17 +45,10 @@ public class FrequencyList {
         return columnToGeneralize;
     }
 
-    public FrequencyList generalize(int columnToGeneralize, Hierarchy hierarchy) {
-        FrequencyList result = new FrequencyList(numberOfColumns);
-
+    public void generalize(int columnToGeneralize, Hierarchy hierarchy) {
         for (List<String> row : data) {
-            final String generalizedValue = hierarchy.generalize(row.get(columnToGeneralize));
-            final List<String> generalizedRow = new ArrayList<>(row);
-            generalizedRow.set(columnToGeneralize, generalizedValue);
-            result.put(generalizedRow);
+            row.set(columnToGeneralize, hierarchy.generalize(row.get(columnToGeneralize)));
         }
-
-        return result;
     }
 
     @Override
