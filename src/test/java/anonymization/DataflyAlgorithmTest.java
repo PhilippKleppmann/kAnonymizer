@@ -1,3 +1,7 @@
+package anonymization;
+
+import anonymization.DataflyAlgorithm;
+import anonymization.FrequencyList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;

@@ -1,7 +1,8 @@
+import anonymization.KAnonymizer;
 import java.io.IOException;
 import org.junit.Test;
 
-public class KAnonymizerIntegrationTest {
+public class KAnonymizationIntegrationTest {
 
     private final String resourcesPrefix = "src/test/resources/";
 

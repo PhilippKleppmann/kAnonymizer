@@ -1,4 +1,8 @@
+package anonymization;
+
+import anonymization.FrequencyList;
 import com.google.common.annotations.VisibleForTesting;
+import config.Hierarchy;
 import java.util.List;
 
 public class DataflyAlgorithm {

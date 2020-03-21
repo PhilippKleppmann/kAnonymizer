@@ -1,9 +1,10 @@
-import com.google.common.annotations.VisibleForTesting;
+package anonymization;
+
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
-import java.util.ArrayList;
+import config.Hierarchy;
 import java.util.List;
 import java.util.Set;
 

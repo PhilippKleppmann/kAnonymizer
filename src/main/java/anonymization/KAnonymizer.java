@@ -1,5 +1,9 @@
+package anonymization;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Multiset;
+import config.Hierarchy;
+import io.CsvHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
