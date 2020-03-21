@@ -60,6 +60,10 @@ public class FrequencyList {
 
     public void suppressEquivalenceClass(List<String> equivalenceClass) {
         data.remove(equivalenceClass, data.count(equivalenceClass));
+
+        for (int i = 0; i < distinctValuesPerColumn.size(); ++i) {
+            distinctValuesPerColumn.remove(equivalenceClass.get(i));
+        }
     }
 
     @Override

@@ -15,10 +15,13 @@ public class DataflyAlgorithm {
     }
 
     public FrequencyList kAnonymize(FrequencyList frequencyList) {
-        int columnToGeneralize = frequencyList.findColumnToGeneralize();
-        frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
-        columnToGeneralize = frequencyList.findColumnToGeneralize();
-        frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
+
+        while (continueGeneralizing(frequencyList)) {
+            final int columnToGeneralize = frequencyList.findColumnToGeneralize();
+            frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
+        }
+
+        suppressSmallEquivalenceClasses(frequencyList);
 
         return frequencyList;
     }
