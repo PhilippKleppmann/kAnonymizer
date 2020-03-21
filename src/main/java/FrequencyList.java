@@ -20,6 +20,10 @@ public class FrequencyList {
         }
     }
 
+    public Multiset<List<String>> getData() {
+        return data;
+    }
+
     public void put(List<String> row) {
         data.add(row);
 

@@ -15,7 +15,7 @@ public class CsvHandler {
                     .collect(Collectors.toList());
     }
 
-    public static void writeCsv(String fileName, List<List<String>> fields) throws IOException {
+    public static void writeCsv(String fileName, Iterable<List<String>> fields) throws IOException {
         PrintWriter writer = new PrintWriter(fileName, "UTF-8");
 
         for (List<String> fieldsRow : fields) {

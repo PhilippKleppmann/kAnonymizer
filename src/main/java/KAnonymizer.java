@@ -1,12 +1,12 @@
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Multiset;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class KAnonymizer {
 
-    private final List<Hierarchy> hierarchies = new ArrayList<>();
+    private final List<Hierarchy> hierarchies  = new ArrayList<>();
 
     public KAnonymizer(String... hierarchyFileNames) throws IOException {
         for (String fileName : hierarchyFileNames) {
@@ -14,13 +14,15 @@ public class KAnonymizer {
         }
     }
 
-    public void anonymize(String filename) throws IOException {
-        FrequencyList frequencyList = loadData(filename);
+    public void anonymize(String dataFileName) throws IOException {
+        FrequencyList frequencyList = loadData(dataFileName);
+
         int columnToGeneralize = frequencyList.findColumnToGeneralize();
         frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
         columnToGeneralize = frequencyList.findColumnToGeneralize();
         frequencyList.generalize(columnToGeneralize, hierarchies.get(columnToGeneralize));
-        System.out.println("hello world");
+
+        writeData(frequencyList, dataFileName);
     }
 
     @VisibleForTesting
@@ -33,5 +35,10 @@ public class KAnonymizer {
             frequencyList.put(row);
         }
         return frequencyList;
+    }
+
+    private void writeData(FrequencyList frequencyList, final String dataFileName) throws IOException {
+        final Multiset<List<String>> data = frequencyList.getData();
+        CsvHandler.writeCsv(dataFileName + ".anon", data);
     }
 }

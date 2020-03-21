@@ -10,6 +10,7 @@ public class KAnonymizerIntegrationTest {
         String genderHierarchy = resourcesPrefix + "ageHierarchy.csv";
         String nameHierarchy = resourcesPrefix + "nameHierarchy.csv";
         final KAnonymizer kAnonymizer = new KAnonymizer(nameHierarchy, genderHierarchy);
+
         kAnonymizer.anonymize(resourcesPrefix + "integrationTestTable.csv");
     }
 }
