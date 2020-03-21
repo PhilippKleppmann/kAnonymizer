@@ -33,4 +33,11 @@ public class DataflyAlgorithm {
 
         return allSmallEquivalenceClasses > k;
     }
+
+    @VisibleForTesting
+    void suppressSmallEquivalenceClasses(final FrequencyList frequencyList) {
+        frequencyList.getData().entrySet().stream()
+                     .filter(entry -> entry.getCount() < k)
+                     .forEach(entry -> frequencyList.suppressEquivalenceClass(entry.getElement()));
+    }
 }

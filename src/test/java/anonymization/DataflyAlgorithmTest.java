@@ -1,10 +1,9 @@
 package anonymization;
 
-import anonymization.DataflyAlgorithm;
-import anonymization.FrequencyList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -34,5 +33,22 @@ public class DataflyAlgorithmTest {
         frequencyList.put(bob);
 
         assertFalse(algorithm.continueGeneralizing(frequencyList));
+    }
+
+    @Test
+    public void testSuppressSmallEquivalenceClasses() {
+        final DataflyAlgorithm algorithm = new DataflyAlgorithm(2, null);
+        FrequencyList frequencyList = new FrequencyList(2);
+        frequencyList.put(alice);
+        frequencyList.put(bob);
+        frequencyList.put(bob);
+
+        FrequencyList expectedFrequencyList = new FrequencyList(2);
+        expectedFrequencyList.put(bob);
+        expectedFrequencyList.put(bob);
+
+        algorithm.suppressSmallEquivalenceClasses(frequencyList);
+
+        assertEquals(expectedFrequencyList, frequencyList);
     }
 }

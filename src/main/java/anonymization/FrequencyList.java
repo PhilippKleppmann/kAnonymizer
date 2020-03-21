@@ -58,6 +58,10 @@ public class FrequencyList {
         }
     }
 
+    public void suppressEquivalenceClass(List<String> equivalenceClass) {
+        data.remove(equivalenceClass, data.count(equivalenceClass));
+    }
+
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
