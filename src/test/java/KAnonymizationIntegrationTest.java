@@ -8,10 +8,23 @@ public class KAnonymizationIntegrationTest {
 
     @Test
     public void testKAnonymizer() throws IOException {
-        String genderHierarchy = resourcesPrefix + "ageHierarchy.csv";
+        String genderHierarchy = resourcesPrefix + "genderHierarchy.csv";
         String nameHierarchy = resourcesPrefix + "nameHierarchy.csv";
         final KAnonymizer kAnonymizer = new KAnonymizer(nameHierarchy, genderHierarchy);
 
         kAnonymizer.kAnonymize(resourcesPrefix + "integrationTestTable.csv", 2);
+    }
+
+    @Test
+    public void testDataset() throws IOException {
+        String ageHierarchy = resourcesPrefix + "ageHierarchy.csv";
+        String educationHierarchy = resourcesPrefix + "educationHierarchy.csv";
+        String genderHierarchy = resourcesPrefix + "genderHierarchy.csv";
+        String maritalHierarchy = resourcesPrefix + "maritalHierarchy.csv";
+        String countryHierarchy = resourcesPrefix + "countryHierarchy.csv";
+        final KAnonymizer kAnonymizer = new KAnonymizer(ageHierarchy,
+                educationHierarchy, maritalHierarchy, genderHierarchy, countryHierarchy);
+
+        kAnonymizer.kAnonymize(resourcesPrefix + "adults.csv", 2);
     }
 }
