@@ -7,8 +7,8 @@ import java.util.List;
 public class Hierarchy {
 
     private final List<List<String>> config;
-    private final int rows;
-    private final int columns;
+    private final int                rows;
+    private final int                columns;
 
     public Hierarchy(String hierarchyConfigPath) throws IOException {
         config = CsvHandler.readCsv(hierarchyConfigPath);
@@ -17,10 +17,10 @@ public class Hierarchy {
     }
 
     public String generalize(String value) {
-        for (int r = 0; r < rows-1; ++r) {
+        for (int r = 0; r < rows - 1; ++r) {
             for (int c = 0; c < columns; ++c) {
                 if (config.get(r).get(c).equals(value)) {
-                    return config.get(r+1).get(c);
+                    return config.get(r + 1).get(c);
                 }
             }
         }

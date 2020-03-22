@@ -3,7 +3,6 @@ package anonymization;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
-import com.google.common.collect.Multiset.Entry;
 import com.google.common.collect.Sets;
 import config.Hierarchy;
 import java.util.ArrayList;
@@ -65,11 +64,9 @@ public class FrequencyList {
     public FrequencyList suppressSmallEquivalenceClasses(int threshold) {
         FrequencyList result = new FrequencyList(numberOfColumns);
 
-        for (List<String> row : data) {
-            if (data.count(row) >= threshold) {
-                result.put(row);
-            }
-        }
+        data.stream()
+            .filter(row -> data.count(row) >= threshold)
+            .forEach(row -> result.put(row));
 
         return result;
     }

@@ -8,9 +8,9 @@ public class KAnonymizationIntegrationTest {
 
     @Test
     public void testKAnonymizer() throws IOException {
-        String genderHierarchy = resourcesPrefix + "genderHierarchy.csv";
+        String ageHierarchy = resourcesPrefix + "ageHierarchy.csv";
         String nameHierarchy = resourcesPrefix + "nameHierarchy.csv";
-        final KAnonymizer kAnonymizer = new KAnonymizer(nameHierarchy, genderHierarchy);
+        final KAnonymizer kAnonymizer = new KAnonymizer(nameHierarchy, ageHierarchy);
 
         kAnonymizer.kAnonymize(resourcesPrefix + "integrationTestTable.csv", 2);
     }

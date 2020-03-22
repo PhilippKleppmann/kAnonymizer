@@ -28,11 +28,12 @@ public class KAnonymizer {
     FrequencyList loadData(String filename) throws IOException {
         final List<List<String>> table = CsvHandler.readCsv(filename);
 
-        final FrequencyList frequencyList = new FrequencyList(table.get(0).size());
+        final int numberOfColumns = table.get(0).size();
+        final FrequencyList frequencyList = new FrequencyList(numberOfColumns);
 
-        for (List<String> row : table) {
-            frequencyList.put(row);
-        }
+        table.stream()
+             .forEach(row -> frequencyList.put(row));
+
         return frequencyList;
     }
 

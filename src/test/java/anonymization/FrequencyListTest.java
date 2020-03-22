@@ -1,6 +1,5 @@
 package anonymization;
 
-import anonymization.FrequencyList;
 import config.Hierarchy;
 import java.io.IOException;
 import java.util.Arrays;

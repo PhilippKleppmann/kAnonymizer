@@ -1,7 +1,5 @@
 package anonymization;
 
-import anonymization.FrequencyList;
-import anonymization.KAnonymizer;
 import java.io.IOException;
 import java.util.Arrays;
 import org.junit.Test;
