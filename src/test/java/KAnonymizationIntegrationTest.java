@@ -16,7 +16,7 @@ public class KAnonymizationIntegrationTest {
     }
 
     @Test
-    public void testDataset() throws IOException {
+    public void anonymizeAdults() throws IOException {
         String ageHierarchy = resourcesPrefix + "ageHierarchy.csv";
         String educationHierarchy = resourcesPrefix + "educationHierarchy.csv";
         String genderHierarchy = resourcesPrefix + "genderHierarchy.csv";
