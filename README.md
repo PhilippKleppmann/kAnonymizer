@@ -18,8 +18,15 @@ To build the project, execute `./gradlew assemble` in the project root. In order
 
 #### Future projects
 
-The implementation of the data storage in `FrequencyList` is not optimal. Currently, the list is copied when generalizing columns or dropping small equivalence classes. This is because we are modifying a collection while iterating over it. Implementing a custom data structure that allows modifying/deleting fields in place would make the algorithm more space-efficient.
-
-Additionally, there are many potential refinements to the algorithm, for example giving a preference for which column is generalized or when to drop rows.
+There are many potential refinements to the algorithm, for example giving a preference for which column is generalized or when to drop rows.
 
 Also, it would be nice to mark certain columns of a table as quasi-identifiers, and run the k-anonymization algorithm based only on these.
+
+#### Comments
+
+The implementation of the data storage in `FrequencyList` doesn't seem optimal, as the data is copied at every generalization step.
+Can we be more space-efficient?
+Yes, we can modify the data in place.
+But then `Multiset::count` (used to determine the end of the generalization process) returns wrong results, as generalization makes some entries equal that were distinct before.
+A new implementation of `Multiset::count` would have to iterate over the multiset to get new counts.
+So the space-efficiency comes at the cost of computational efficiency.
