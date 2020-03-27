@@ -1,6 +1,10 @@
 import anonymization.KAnonymizer;
+import io.CsvHandler;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class KAnonymizationIntegrationTest {
 
@@ -13,6 +17,11 @@ public class KAnonymizationIntegrationTest {
         final KAnonymizer kAnonymizer = new KAnonymizer(nameHierarchy, ageHierarchy);
 
         kAnonymizer.kAnonymize(resourcesPrefix + "integrationTestTable.csv", 2);
+
+        final List<List<String>> anonymizedTable = CsvHandler.readCsv(resourcesPrefix + "integrationTestTable.csv.anon");
+        assertEquals(2, anonymizedTable.size());
+        assertEquals(Arrays.asList("A","[21-25]"),anonymizedTable.get(0));
+        assertEquals(Arrays.asList("A","[21-25]"),anonymizedTable.get(1));
     }
 
     @Test
