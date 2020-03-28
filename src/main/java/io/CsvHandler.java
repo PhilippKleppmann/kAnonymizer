@@ -1,5 +1,6 @@
 package io;
 
+import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -11,10 +12,15 @@ import java.util.stream.Collectors;
 
 public class CsvHandler {
     public static List<List<String>> readCsv(String fileName) throws IOException {
-        return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8)
-                    .stream()
-                    .map(line -> Arrays.asList(line.split(",")))
-                    .collect(Collectors.toList());
+        final List<List<String>> fields = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8)
+                                                .stream()
+                                                .map(line -> Arrays.asList(line.split(",")))
+                                                .collect(Collectors.toList());
+        if (validateNumberOfColumns(fields)) {
+            return fields;
+        } else {
+            throw new RuntimeException("Validation of CSV failed: Not all rows have the same length");
+        }
     }
 
     public static void writeCsv(String fileName, Iterable<List<String>> fields) throws IOException {
@@ -26,5 +32,21 @@ public class CsvHandler {
         }
 
         writer.close();
+    }
+
+    @VisibleForTesting
+    static boolean validateNumberOfColumns(List<List<String>> fields) {
+        if (fields.isEmpty()) {
+            return true;
+        }
+
+        int numberOfColumns = fields.get(0).size();
+        for (List<String> row : fields) {
+            if (row.size() != numberOfColumns) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
