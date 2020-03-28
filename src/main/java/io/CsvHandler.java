@@ -14,7 +14,9 @@ public class CsvHandler {
     public static List<List<String>> readCsv(String fileName) throws IOException {
         final List<List<String>> fields = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8)
                                                 .stream()
+                                                .filter(row -> row.length() > 0)
                                                 .map(line -> Arrays.asList(line.split(",")))
+                                                .map(CsvHandler::trimAll)
                                                 .collect(Collectors.toList());
         if (validateNumberOfColumns(fields)) {
             return fields;
@@ -32,6 +34,12 @@ public class CsvHandler {
         }
 
         writer.close();
+    }
+
+    private static List<String> trimAll(List<String> row) {
+        return row.stream()
+                .map(field -> field.trim())
+                .collect(Collectors.toList());
     }
 
     @VisibleForTesting
