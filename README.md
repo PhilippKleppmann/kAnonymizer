@@ -11,9 +11,18 @@ The algorithm requires the following parameters:
 
 #### Try it yourself
 
-This project contains an extract `adults.csv` of the [adult dataset](https://archive.ics.uci.edu/ml/datasets/Adult) for testing.
+To build the project, execute
+```bash
+./gradlew assemble
+```
+in the project root. This requires a Java 8 JDK to be installed.
 
-To build the project, execute `./gradlew assemble` in the project root. In order to anonymize the given example dataset, execute `KAnonymizationIntegrationTest.anonymizeAdults()`.
+This project contains an extract `adults.csv` of the [adult dataset](https://archive.ics.uci.edu/ml/datasets/Adult) in `src/test/resources/data`.
+In order to anonymize it yourself, execute
+```bash
+./gradlew test --tests KAnonymizationIntegrationTest.anonymizeAdults
+```
+The result is written to `adults.csv.anon` in the data directory.
 
 
 #### Future projects
