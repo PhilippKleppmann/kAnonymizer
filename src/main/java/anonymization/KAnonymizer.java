@@ -7,6 +7,9 @@ import io.CsvHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class KAnonymizer {
 
@@ -29,7 +32,11 @@ public class KAnonymizer {
         final List<List<String>> table = CsvHandler.readCsv(filename);
 
         final int numberOfColumns = table.get(0).size();
-        final FrequencyList frequencyList = new FrequencyList(numberOfColumns);
+        // TODO: import quasi-identifier columns from config
+        Set<Integer> allColumns = IntStream.range(0, numberOfColumns)
+                                           .boxed()
+                                           .collect(Collectors.toSet());
+        final FrequencyList frequencyList = new FrequencyList(numberOfColumns, allColumns);
 
         table.stream()
              .forEach(row -> frequencyList.put(row));

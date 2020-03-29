@@ -29,6 +29,7 @@ public class DataflyAlgorithm {
     @VisibleForTesting
     boolean continueGeneralizing(final FrequencyList frequencyList) {
         int allSmallEquivalenceClasses = frequencyList.getData().entrySet().stream()
+                                                      //TODO: this count should return the multiplicities of the quasi-identifier columns
                                                       .map(entry -> entry.getCount())
                                                       .filter(count -> count < k)
                                                       .reduce(0, (countSum, count) -> countSum + count);

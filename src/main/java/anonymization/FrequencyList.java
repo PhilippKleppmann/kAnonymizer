@@ -11,11 +11,13 @@ import java.util.Set;
 
 public class FrequencyList {
 
-    private       Multiset<List<String>> data                    = HashMultiset.create();
-    private final List<Set<String>>      distinctValuesPerColumn = Lists.newArrayList();
+    private final Multiset<List<String>> data                    = HashMultiset.create();
+    private final Set<Integer>           quasiIdentifierColumns;
     private final int                    numberOfColumns;
+    private final List<Set<String>>      distinctValuesPerColumn = Lists.newArrayList();
 
-    public FrequencyList(int numberOfColumns) {
+    public FrequencyList(int numberOfColumns, Set<Integer> quasiIdentifierColumns) {
+        this.quasiIdentifierColumns = quasiIdentifierColumns;
         this.numberOfColumns = numberOfColumns;
         for (int i = 0; i < numberOfColumns; ++i) {
             distinctValuesPerColumn.add(Sets.newHashSet());
@@ -40,17 +42,17 @@ public class FrequencyList {
     public int findColumnToGeneralize() {
         int maxDistinctColumnValues = 0;
         int columnToGeneralize = 0;
-        for (int i = 0; i < distinctValuesPerColumn.size(); ++i) {
-            if (distinctValuesPerColumn.get(i).size() > maxDistinctColumnValues) {
-                maxDistinctColumnValues = distinctValuesPerColumn.get(i).size();
-                columnToGeneralize = i;
+        for (int column : quasiIdentifierColumns) {
+            if (distinctValuesPerColumn.get(column).size() > maxDistinctColumnValues) {
+                maxDistinctColumnValues = distinctValuesPerColumn.get(column).size();
+                columnToGeneralize = column;
             }
         }
         return columnToGeneralize;
     }
 
     public FrequencyList generalize(int columnToGeneralize, Hierarchy hierarchy) {
-        FrequencyList result = new FrequencyList(numberOfColumns);
+        FrequencyList result = new FrequencyList(numberOfColumns, quasiIdentifierColumns);
 
         for (List<String> row : data) {
             final String generalizedValue = hierarchy.generalize(row.get(columnToGeneralize));
@@ -62,7 +64,7 @@ public class FrequencyList {
     }
 
     public FrequencyList suppressSmallEquivalenceClasses(int threshold) {
-        FrequencyList result = new FrequencyList(numberOfColumns);
+        FrequencyList result = new FrequencyList(numberOfColumns, quasiIdentifierColumns);
 
         data.stream()
             .filter(row -> data.count(row) >= threshold)
