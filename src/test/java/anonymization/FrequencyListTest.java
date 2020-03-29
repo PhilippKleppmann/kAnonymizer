@@ -31,7 +31,7 @@ public class FrequencyListTest {
 
     @Test
     public void testGeneralize() throws IOException {
-        final Hierarchy nameHierarchy = new Hierarchy("src/test/resources/nameHierarchy.csv");
+        final Hierarchy nameHierarchy = new Hierarchy("src/test/resources/hierarchies/nameHierarchy.csv");
 
         FrequencyList frequencyList = new FrequencyList(2, allColumns);
         frequencyList.put(alice);

@@ -27,13 +27,13 @@ public class KAnonymizer {
     }
 
     public void kAnonymize(String dataFile, int k) throws IOException {
-        FrequencyList frequencyList = loadData(dataFile, null);
+        FrequencyList frequencyList = loadData(dataFile);
         frequencyList = new DataflyAlgorithm(k, hierarchies).kAnonymize(frequencyList);
         writeData(frequencyList, dataFile);
     }
 
     @VisibleForTesting
-    FrequencyList loadData(String dataFile, String quasiIdentifierColumnsConfigFile) throws IOException {
+    FrequencyList loadData(String dataFile) throws IOException {
         final List<List<String>> data = CsvHandler.readCsv(dataFile);
         final int numberOfColumns = data.get(0).size();
 

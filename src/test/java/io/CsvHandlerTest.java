@@ -10,11 +10,12 @@ import static org.junit.Assert.assertTrue;
 
 public class CsvHandlerTest {
 
+    private final String resourcesPrefix = "src/test/resources/";
     private static List<String> alice = Arrays.asList("Alice", "25");
 
     @Test
     public void testReadCsv() throws IOException {
-        final List<List<String>> csv = CsvHandler.readCsv("src/test/resources/testData1Row.csv");
+        final List<List<String>> csv = CsvHandler.readCsv(resourcesPrefix + "data/testData1Row.csv");
         assertEquals(1, csv.size());
         assertEquals(alice, csv.get(0));
     }
@@ -22,7 +23,7 @@ public class CsvHandlerTest {
     @Test
     public void testWriteCsv() throws IOException {
         List<List<String>> data = Arrays.asList(alice);
-        CsvHandler.writeCsv("src/test/resources/testWriteCsv.csv", data);
+        CsvHandler.writeCsv(resourcesPrefix + "data/testWriteCsv.csv", data);
     }
 
     @Test

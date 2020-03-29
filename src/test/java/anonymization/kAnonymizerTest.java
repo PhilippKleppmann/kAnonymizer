@@ -11,10 +11,9 @@ public class kAnonymizerTest {
 
     @Test
     public void testLoadData() throws IOException {
-        final KAnonymizer kAnonymizer = new KAnonymizer(resourcesPrefix + "firstTwoColumns.csv");
+        final KAnonymizer kAnonymizer = new KAnonymizer(resourcesPrefix + "quasi-identifiers/firstTwoColumns.csv");
 
-        final FrequencyList frequencyList = kAnonymizer.loadData(resourcesPrefix + "testData3Rows.csv",
-                resourcesPrefix + "firstTwoColumns.csv");
+        final FrequencyList frequencyList = kAnonymizer.loadData(resourcesPrefix + "data/testData3Rows.csv");
 
         assertEquals(3, frequencyList.getData().size());
         assertEquals(2, frequencyList.getData().count(Arrays.asList("Bob", "20")));
