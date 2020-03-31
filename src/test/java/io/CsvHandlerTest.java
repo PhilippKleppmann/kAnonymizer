@@ -1,6 +1,11 @@
 package io;
 
+import dto.Dataset;
+import dto.NonIdentifiers;
+import dto.QuasiIdentifiers;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -10,8 +15,8 @@ import static org.junit.Assert.assertTrue;
 
 public class CsvHandlerTest {
 
-    private final String resourcesPrefix = "src/test/resources/";
-    private static List<String> alice = Arrays.asList("Alice", "25");
+    private final  String       resourcesPrefix = "src/test/resources/";
+    private static List<String> alice           = Arrays.asList("Alice", "25");
 
     @Test
     public void testReadCsv() throws IOException {
@@ -24,6 +29,15 @@ public class CsvHandlerTest {
     public void testWriteCsv() throws IOException {
         List<List<String>> data = Arrays.asList(alice);
         CsvHandler.writeCsv(resourcesPrefix + "data/testWriteCsv.csv", data);
+    }
+
+    @Test
+    public void testWriteDataset() throws FileNotFoundException, UnsupportedEncodingException {
+        final Dataset dataset = new Dataset();
+        final QuasiIdentifiers quasiIdentifiers = new QuasiIdentifiers(Arrays.asList("a", "b"));
+        final NonIdentifiers nonIdentifiers = new NonIdentifiers(Arrays.asList("c", "d"));
+        dataset.add(quasiIdentifiers, nonIdentifiers);
+        CsvHandler.writeCsv(resourcesPrefix + "data/testWriteDataset.csv", dataset);
     }
 
     @Test

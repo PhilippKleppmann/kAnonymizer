@@ -2,9 +2,10 @@ package anonymization;
 
 import com.google.common.collect.Sets;
 import config.Hierarchy;
+import dto.NonIdentifiers;
+import dto.QuasiIdentifiers;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -12,17 +13,18 @@ import static org.junit.Assert.assertEquals;
 
 public class FrequencyListTest {
 
-    private final List<String> alice      = Arrays.asList("Alice", "20");
-    private final List<String> bob21      = Arrays.asList("Bob", "21");
-    private final List<String> bob22      = Arrays.asList("Bob", "22");
-    private final Set<Integer> allColumns = Sets.newHashSet(0, 1);
+    private final QuasiIdentifiers alice      = new QuasiIdentifiers(Arrays.asList("Alice", "20"));
+    private final QuasiIdentifiers bob21      = new QuasiIdentifiers(Arrays.asList("Bob", "21"));
+    private final QuasiIdentifiers bob22      = new QuasiIdentifiers(Arrays.asList("Bob", "22"));
+    private final NonIdentifiers   empty      = new NonIdentifiers(Arrays.asList());
+    private final Set<Integer>     allColumns = Sets.newHashSet(0, 1);
 
     @Test
     public void testFindColumnToGeneralize() {
         final FrequencyList frequencyList = new FrequencyList(2, allColumns);
-        frequencyList.put(alice);
-        frequencyList.put(bob21);
-        frequencyList.put(bob22);
+        frequencyList.put(alice, empty);
+        frequencyList.put(bob21, empty);
+        frequencyList.put(bob22, empty);
 
         int columnToGeneralize = frequencyList.findColumnToGeneralize();
 
@@ -34,14 +36,14 @@ public class FrequencyListTest {
         final Hierarchy nameHierarchy = new Hierarchy("src/test/resources/hierarchies/nameHierarchy.csv");
 
         FrequencyList frequencyList = new FrequencyList(2, allColumns);
-        frequencyList.put(alice);
-        frequencyList.put(bob21);
-        frequencyList.put(bob22);
+        frequencyList.put(alice, empty);
+        frequencyList.put(bob21, empty);
+        frequencyList.put(bob22, empty);
 
         final FrequencyList expectedFrequencyList = new FrequencyList(2, allColumns);
-        expectedFrequencyList.put(Arrays.asList("A", "20"));
-        expectedFrequencyList.put(Arrays.asList("B", "21"));
-        expectedFrequencyList.put(Arrays.asList("B", "22"));
+        expectedFrequencyList.put(new QuasiIdentifiers(Arrays.asList("A", "20")), empty);
+        expectedFrequencyList.put(new QuasiIdentifiers(Arrays.asList("B", "21")), empty);
+        expectedFrequencyList.put(new QuasiIdentifiers(Arrays.asList("B", "22")), empty);
 
         frequencyList = frequencyList.generalize(0, nameHierarchy);
 
@@ -51,13 +53,13 @@ public class FrequencyListTest {
     @Test
     public void testSuppressSmallEquivalenceClasses() {
         FrequencyList frequencyList = new FrequencyList(2, allColumns);
-        frequencyList.put(alice);
-        frequencyList.put(bob21);
-        frequencyList.put(bob21);
+        frequencyList.put(alice, empty);
+        frequencyList.put(bob21, empty);
+        frequencyList.put(bob21, empty);
 
         FrequencyList expectedFrequencyList = new FrequencyList(2, allColumns);
-        expectedFrequencyList.put(bob21);
-        expectedFrequencyList.put(bob21);
+        expectedFrequencyList.put(bob21, empty);
+        expectedFrequencyList.put(bob21, empty);
 
         frequencyList = frequencyList.suppressSmallEquivalenceClasses(2);
 

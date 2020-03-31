@@ -2,6 +2,7 @@ package anonymization;
 
 import com.google.common.annotations.VisibleForTesting;
 import config.Hierarchy;
+import dto.Dataset;
 import java.util.List;
 
 public class DataflyAlgorithm {
@@ -28,11 +29,11 @@ public class DataflyAlgorithm {
     // true if there are equivalence classes of size <k that account for >k elements
     @VisibleForTesting
     boolean continueGeneralizing(final FrequencyList frequencyList) {
-        int allSmallEquivalenceClasses = frequencyList.getData().entrySet().stream()
-                                                      //TODO: this count should return the multiplicities of the quasi-identifier columns
-                                                      .map(entry -> entry.getCount())
-                                                      .filter(count -> count < k)
-                                                      .reduce(0, (countSum, count) -> countSum + count);
+        final Dataset data = frequencyList.getData();
+        int allSmallEquivalenceClasses = data.keySet().stream()
+                                             .map(quasiIdentifiers -> data.get(quasiIdentifiers).size())
+                                             .filter(count -> count < k)
+                                             .reduce(0, (countSum, count) -> countSum + count);
 
         return allSmallEquivalenceClasses > k;
     }

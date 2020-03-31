@@ -1,5 +1,6 @@
 package anonymization;
 
+import dto.QuasiIdentifiers;
 import java.io.IOException;
 import java.util.Arrays;
 import org.junit.Test;
@@ -15,9 +16,9 @@ public class kAnonymizerTest {
 
         final FrequencyList frequencyList = kAnonymizer.loadData(resourcesPrefix + "data/testData3Rows.csv");
 
-        assertEquals(3, frequencyList.getData().size());
-        assertEquals(2, frequencyList.getData().count(Arrays.asList("Bob", "20")));
-        assertEquals(1, frequencyList.getData().count(Arrays.asList("Alice", "25")));
+        assertEquals(2, frequencyList.getData().size());
+        assertEquals(2, frequencyList.getData().get(new QuasiIdentifiers(Arrays.asList("Bob", "20"))).size());
+        assertEquals(1, frequencyList.getData().get(new QuasiIdentifiers(Arrays.asList("Alice", "25"))).size());
     }
 
 }

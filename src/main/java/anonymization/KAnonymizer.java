@@ -3,9 +3,13 @@ package anonymization;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Multiset;
 import config.Hierarchy;
+import dto.Dataset;
+import dto.NonIdentifiers;
+import dto.QuasiIdentifiers;
 import io.CsvHandler;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,14 +43,15 @@ public class KAnonymizer {
 
         final FrequencyList frequencyList = new FrequencyList(numberOfColumns, quasiIdentifierColumns);
 
+        //TODO split input into quasi-identifiers and non-identifiers
         data.stream()
-            .forEach(row -> frequencyList.put(row));
+            .forEach(row -> frequencyList.put(new QuasiIdentifiers(row), new NonIdentifiers(Arrays.asList())));
 
         return frequencyList;
     }
 
     private void writeData(FrequencyList frequencyList, final String dataFileName) throws IOException {
-        final Multiset<List<String>> data = frequencyList.getData();
+        final Dataset data = frequencyList.getData();
         CsvHandler.writeCsv(dataFileName + ".anon", data);
     }
 }
