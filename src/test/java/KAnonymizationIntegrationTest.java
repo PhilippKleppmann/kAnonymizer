@@ -20,9 +20,10 @@ public class KAnonymizationIntegrationTest {
         kAnonymizer.kAnonymize(resourcesPrefix + "data/integrationTestTable.csv", 2);
 
         final List<List<String>> anonymizedTable = CsvHandler.readCsv(resourcesPrefix + "data/integrationTestTable.csv.anon");
-        assertEquals(2, anonymizedTable.size());
+        assertEquals(3, anonymizedTable.size());
         assertEquals(Arrays.asList("A", "[21-25]", "X"), anonymizedTable.get(0));
         assertEquals(Arrays.asList("A", "[21-25]", "Y"), anonymizedTable.get(1));
+        assertEquals(Arrays.asList("A", "[21-25]", "Z"), anonymizedTable.get(2));
     }
 
     @Test
