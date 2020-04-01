@@ -20,7 +20,7 @@ public class DataflyAlgorithmTest {
     @Test
     public void testContinueGeneralization() {
         final DataflyAlgorithm algorithm = new DataflyAlgorithm(2, null);
-        FrequencyList frequencyList = new FrequencyList(2, allColumns);
+        FrequencyList frequencyList = new FrequencyList(allColumns);
         frequencyList.put(alice, empty);
         frequencyList.put(bob, empty);
         frequencyList.put(clare, empty);
@@ -31,7 +31,7 @@ public class DataflyAlgorithmTest {
     @Test
     public void testDiscontinueGeneralization() {
         final DataflyAlgorithm algorithm = new DataflyAlgorithm(2, null);
-        FrequencyList frequencyList = new FrequencyList(2, allColumns);
+        FrequencyList frequencyList = new FrequencyList(allColumns);
         frequencyList.put(alice, empty);
         frequencyList.put(bob, empty);
 

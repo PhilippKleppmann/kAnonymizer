@@ -7,4 +7,8 @@ public class NonIdentifiers extends ArrayList<String> {
     public NonIdentifiers(Collection<String> fields) {
         addAll(fields);
     }
+
+    public NonIdentifiers() {
+        super();
+    }
 }

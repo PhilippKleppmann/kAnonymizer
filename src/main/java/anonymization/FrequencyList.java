@@ -14,13 +14,13 @@ public class FrequencyList {
 
     private final Dataset           data                    = new Dataset();
     private final Set<Integer>      quasiIdentifierColumns;
-    private final int               numberOfColumns;
+    private final int               numberOfQuasiIdentifiers;
     private final List<Set<String>> distinctValuesPerColumn = Lists.newArrayList();
 
-    public FrequencyList(int numberOfColumns, Set<Integer> quasiIdentifierColumns) {
+    public FrequencyList(Set<Integer> quasiIdentifierColumns) {
         this.quasiIdentifierColumns = quasiIdentifierColumns;
-        this.numberOfColumns = numberOfColumns;
-        for (int i = 0; i < numberOfColumns; ++i) {
+        this.numberOfQuasiIdentifiers = quasiIdentifierColumns.size();
+        for (int i = 0; i < numberOfQuasiIdentifiers; ++i) {
             distinctValuesPerColumn.add(Sets.newHashSet());
         }
     }
@@ -40,7 +40,7 @@ public class FrequencyList {
     }
 
     private void updateDistinctValuesPerColumn(final QuasiIdentifiers quasiIdentifiers) {
-        for (int i = 0; i < numberOfColumns; ++i) {
+        for (int i = 0; i < numberOfQuasiIdentifiers; ++i) {
             final Set<String> distinctValues = distinctValuesPerColumn.get(i);
             distinctValues.add(quasiIdentifiers.get(i));
             distinctValuesPerColumn.set(i, distinctValues);
@@ -61,7 +61,7 @@ public class FrequencyList {
     }
 
     public FrequencyList generalize(int columnToGeneralize, Hierarchy hierarchy) {
-        FrequencyList result = new FrequencyList(numberOfColumns, quasiIdentifierColumns);
+        FrequencyList result = new FrequencyList(quasiIdentifierColumns);
 
         for (QuasiIdentifiers quasiIdentifiers : data.keySet()) {
             final String generalizedValue = hierarchy.generalize(quasiIdentifiers.get(columnToGeneralize));
@@ -74,7 +74,7 @@ public class FrequencyList {
     }
 
     public FrequencyList suppressSmallEquivalenceClasses(int threshold) {
-        FrequencyList result = new FrequencyList(numberOfColumns, quasiIdentifierColumns);
+        FrequencyList result = new FrequencyList(quasiIdentifierColumns);
 
         data.keySet().stream()
             .filter(quasiIdentifiers -> data.get(quasiIdentifiers).size() >= threshold)

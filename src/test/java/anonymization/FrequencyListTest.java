@@ -21,7 +21,7 @@ public class FrequencyListTest {
 
     @Test
     public void testFindColumnToGeneralize() {
-        final FrequencyList frequencyList = new FrequencyList(2, allColumns);
+        final FrequencyList frequencyList = new FrequencyList(allColumns);
         frequencyList.put(alice, empty);
         frequencyList.put(bob21, empty);
         frequencyList.put(bob22, empty);
@@ -35,12 +35,12 @@ public class FrequencyListTest {
     public void testGeneralize() throws IOException {
         final Hierarchy nameHierarchy = new Hierarchy("src/test/resources/hierarchies/nameHierarchy.csv");
 
-        FrequencyList frequencyList = new FrequencyList(2, allColumns);
+        FrequencyList frequencyList = new FrequencyList(allColumns);
         frequencyList.put(alice, empty);
         frequencyList.put(bob21, empty);
         frequencyList.put(bob22, empty);
 
-        final FrequencyList expectedFrequencyList = new FrequencyList(2, allColumns);
+        final FrequencyList expectedFrequencyList = new FrequencyList(allColumns);
         expectedFrequencyList.put(new QuasiIdentifiers(Arrays.asList("A", "20")), empty);
         expectedFrequencyList.put(new QuasiIdentifiers(Arrays.asList("B", "21")), empty);
         expectedFrequencyList.put(new QuasiIdentifiers(Arrays.asList("B", "22")), empty);
@@ -52,12 +52,12 @@ public class FrequencyListTest {
 
     @Test
     public void testSuppressSmallEquivalenceClasses() {
-        FrequencyList frequencyList = new FrequencyList(2, allColumns);
+        FrequencyList frequencyList = new FrequencyList(allColumns);
         frequencyList.put(alice, empty);
         frequencyList.put(bob21, empty);
         frequencyList.put(bob21, empty);
 
-        FrequencyList expectedFrequencyList = new FrequencyList(2, allColumns);
+        FrequencyList expectedFrequencyList = new FrequencyList(allColumns);
         expectedFrequencyList.put(bob21, empty);
         expectedFrequencyList.put(bob21, empty);
 

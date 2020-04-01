@@ -1,7 +1,6 @@
 package anonymization;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Multiset;
 import config.Hierarchy;
 import dto.Dataset;
 import dto.NonIdentifiers;
@@ -9,7 +8,6 @@ import dto.QuasiIdentifiers;
 import io.CsvHandler;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,13 +37,21 @@ public class KAnonymizer {
     @VisibleForTesting
     FrequencyList loadData(String dataFile) throws IOException {
         final List<List<String>> data = CsvHandler.readCsv(dataFile);
-        final int numberOfColumns = data.get(0).size();
 
-        final FrequencyList frequencyList = new FrequencyList(numberOfColumns, quasiIdentifierColumns);
+        final FrequencyList frequencyList = new FrequencyList(quasiIdentifierColumns);
 
-        //TODO split input into quasi-identifiers and non-identifiers
-        data.stream()
-            .forEach(row -> frequencyList.put(new QuasiIdentifiers(row), new NonIdentifiers(Arrays.asList())));
+        for (List<String> row : data) {
+            QuasiIdentifiers quasiIdentifiers = new QuasiIdentifiers();
+            NonIdentifiers nonIdentifiers = new NonIdentifiers();
+            for (int i = 0; i < row.size(); ++i) {
+                if (quasiIdentifierColumns.contains(i)) {
+                    quasiIdentifiers.add(row.get(i));
+                } else {
+                    nonIdentifiers.add(row.get(i));
+                }
+            }
+            frequencyList.put(quasiIdentifiers,nonIdentifiers);
+        }
 
         return frequencyList;
     }

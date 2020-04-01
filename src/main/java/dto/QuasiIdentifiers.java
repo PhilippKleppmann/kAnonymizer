@@ -7,4 +7,8 @@ public class QuasiIdentifiers extends ArrayList<String> {
     public QuasiIdentifiers(Collection<String> fields) {
         addAll(fields);
     }
+
+    public QuasiIdentifiers() {
+        super();
+    }
 }
