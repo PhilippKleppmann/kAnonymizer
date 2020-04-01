@@ -13,13 +13,11 @@ import java.util.Set;
 public class FrequencyList {
 
     private final Dataset           data                    = new Dataset();
-    private final Set<Integer>      quasiIdentifierColumns;
-    private final int               numberOfQuasiIdentifiers;
     private final List<Set<String>> distinctValuesPerColumn = Lists.newArrayList();
+    private final int               numberOfQuasiIdentifiers;
 
-    public FrequencyList(Set<Integer> quasiIdentifierColumns) {
-        this.quasiIdentifierColumns = quasiIdentifierColumns;
-        this.numberOfQuasiIdentifiers = quasiIdentifierColumns.size();
+    public FrequencyList(int numberOfQuasiIdentifiers) {
+        this.numberOfQuasiIdentifiers = numberOfQuasiIdentifiers;
         for (int i = 0; i < numberOfQuasiIdentifiers; ++i) {
             distinctValuesPerColumn.add(Sets.newHashSet());
         }
@@ -29,16 +27,17 @@ public class FrequencyList {
         return data;
     }
 
-    public void put(QuasiIdentifiers quasiIdentifiers, NonIdentifiers nonIdentifiers) {
+    public void add(QuasiIdentifiers quasiIdentifiers, NonIdentifiers nonIdentifiers) {
         data.add(quasiIdentifiers, nonIdentifiers);
         updateDistinctValuesPerColumn(quasiIdentifiers);
     }
 
-    public void put(QuasiIdentifiers quasiIdentifiers, Multiset<NonIdentifiers> nonIdentifiers) {
+    public void add(QuasiIdentifiers quasiIdentifiers, Multiset<NonIdentifiers> nonIdentifiers) {
         data.add(quasiIdentifiers, nonIdentifiers);
         updateDistinctValuesPerColumn(quasiIdentifiers);
     }
 
+    //keep track of distinct values per column in order to find column to generalize
     private void updateDistinctValuesPerColumn(final QuasiIdentifiers quasiIdentifiers) {
         for (int i = 0; i < numberOfQuasiIdentifiers; ++i) {
             final Set<String> distinctValues = distinctValuesPerColumn.get(i);
@@ -51,34 +50,34 @@ public class FrequencyList {
     public int findColumnToGeneralize() {
         int maxDistinctColumnValues = 0;
         int columnToGeneralize = 0;
-        for (int column : quasiIdentifierColumns) {
-            if (distinctValuesPerColumn.get(column).size() > maxDistinctColumnValues) {
-                maxDistinctColumnValues = distinctValuesPerColumn.get(column).size();
-                columnToGeneralize = column;
+        for (int i = 0; i < numberOfQuasiIdentifiers; ++i) {
+            if (distinctValuesPerColumn.get(i).size() > maxDistinctColumnValues) {
+                maxDistinctColumnValues = distinctValuesPerColumn.get(i).size();
+                columnToGeneralize = i;
             }
         }
         return columnToGeneralize;
     }
 
     public FrequencyList generalize(int columnToGeneralize, Hierarchy hierarchy) {
-        FrequencyList result = new FrequencyList(quasiIdentifierColumns);
+        FrequencyList result = new FrequencyList(numberOfQuasiIdentifiers);
 
         for (QuasiIdentifiers quasiIdentifiers : data.keySet()) {
             final String generalizedValue = hierarchy.generalize(quasiIdentifiers.get(columnToGeneralize));
             final QuasiIdentifiers generalizedQuasiIdentifiers = new QuasiIdentifiers(quasiIdentifiers);
             generalizedQuasiIdentifiers.set(columnToGeneralize, generalizedValue);
-            result.put(generalizedQuasiIdentifiers, data.get(quasiIdentifiers));
+            result.add(generalizedQuasiIdentifiers, data.get(quasiIdentifiers));
         }
 
         return result;
     }
 
     public FrequencyList suppressSmallEquivalenceClasses(int threshold) {
-        FrequencyList result = new FrequencyList(quasiIdentifierColumns);
+        FrequencyList result = new FrequencyList(numberOfQuasiIdentifiers);
 
         data.keySet().stream()
             .filter(quasiIdentifiers -> data.get(quasiIdentifiers).size() >= threshold)
-            .forEach(quasiIdentifiers -> result.put(quasiIdentifiers, data.get(quasiIdentifiers)));
+            .forEach(quasiIdentifiers -> result.add(quasiIdentifiers, data.get(quasiIdentifiers)));
 
         return result;
     }

@@ -20,10 +20,10 @@ public class DataflyAlgorithmTest {
     @Test
     public void testContinueGeneralization() {
         final DataflyAlgorithm algorithm = new DataflyAlgorithm(2, null);
-        FrequencyList frequencyList = new FrequencyList(allColumns);
-        frequencyList.put(alice, empty);
-        frequencyList.put(bob, empty);
-        frequencyList.put(clare, empty);
+        FrequencyList frequencyList = new FrequencyList(allColumns.size());
+        frequencyList.add(alice, empty);
+        frequencyList.add(bob, empty);
+        frequencyList.add(clare, empty);
 
         assertTrue(algorithm.continueGeneralizing(frequencyList));
     }
@@ -31,9 +31,9 @@ public class DataflyAlgorithmTest {
     @Test
     public void testDiscontinueGeneralization() {
         final DataflyAlgorithm algorithm = new DataflyAlgorithm(2, null);
-        FrequencyList frequencyList = new FrequencyList(allColumns);
-        frequencyList.put(alice, empty);
-        frequencyList.put(bob, empty);
+        FrequencyList frequencyList = new FrequencyList(allColumns.size());
+        frequencyList.add(alice, empty);
+        frequencyList.add(bob, empty);
 
         assertFalse(algorithm.continueGeneralizing(frequencyList));
     }

@@ -14,12 +14,12 @@ public class Dataset extends HashMap<QuasiIdentifiers, Multiset<NonIdentifiers>>
         }
     }
 
-    public void add(QuasiIdentifiers quasiIdentifiers, Multiset<NonIdentifiers> nonIdentifiersCollection) {
+    public void add(QuasiIdentifiers quasiIdentifiers, Multiset<NonIdentifiers> nonIdentifiersSet) {
         if (containsKey(quasiIdentifiers)) {
-            nonIdentifiersCollection.stream()
-                                    .forEach(nonIdentifiers -> get(quasiIdentifiers).add(nonIdentifiers));
+            nonIdentifiersSet.stream()
+                             .forEach(nonIdentifiers -> get(quasiIdentifiers).add(nonIdentifiers));
         } else {
-            put(quasiIdentifiers, nonIdentifiersCollection);
+            put(quasiIdentifiers, nonIdentifiersSet);
         }
     }
 

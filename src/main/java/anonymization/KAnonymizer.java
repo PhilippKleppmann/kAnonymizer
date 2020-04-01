@@ -38,7 +38,7 @@ public class KAnonymizer {
     FrequencyList loadData(String dataFile) throws IOException {
         final List<List<String>> data = CsvHandler.readCsv(dataFile);
 
-        final FrequencyList frequencyList = new FrequencyList(quasiIdentifierColumns);
+        final FrequencyList frequencyList = new FrequencyList(quasiIdentifierColumns.size());
 
         for (List<String> row : data) {
             QuasiIdentifiers quasiIdentifiers = new QuasiIdentifiers();
@@ -50,7 +50,7 @@ public class KAnonymizer {
                     nonIdentifiers.add(row.get(i));
                 }
             }
-            frequencyList.put(quasiIdentifiers,nonIdentifiers);
+            frequencyList.add(quasiIdentifiers,nonIdentifiers);
         }
 
         return frequencyList;
