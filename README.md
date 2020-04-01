@@ -17,8 +17,10 @@ To build the project, execute
 ```
 in the project root. This requires a Java 8 JDK to be installed.
 
-This project contains an extract `adults.csv` of the [adult dataset](https://archive.ics.uci.edu/ml/datasets/Adult) in `src/test/resources/data`.
-In order to anonymize it yourself, execute
+This project contains an extract `adults.csv` of the [adult dataset](https://archive.ics.uci.edu/ml/datasets/Adult) in
+`src/test/resources/data`.
+The columns are `age`, `education`, `marital status`, `sex`, `native country`, `capital gain`, `capital loss`, of which
+the first five are considered quasi-identifiers. In order to anonymize it yourself, execute
 ```bash
 ./gradlew test --tests KAnonymizationIntegrationTest.anonymizeAdults
 ```
@@ -28,8 +30,6 @@ The result is written to `adults.csv.anon` in the data directory.
 #### Future projects
 
 There are many potential refinements to the algorithm, for example giving a preference for which column is generalized or when to drop rows.
-
-Also, it would be nice to mark certain columns of a table as quasi-identifiers, and run the k-anonymization algorithm based only on these.
 
 #### Comments
 
